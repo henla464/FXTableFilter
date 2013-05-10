@@ -19,7 +19,7 @@ h3 {
 	width:640px;
 	margin:0 auto;
 	}
-.header {
+.fxTableFilterHeaderSection {
 	width:640px;
 	margin-bottom:20px;
 	padding-bottom:10px;
@@ -29,8 +29,7 @@ h3 {
 	font-size:8pt;
 	clear:both;
 	}
-.header,
-.picnet_logo, 
+.fxTableFilterHeaderSection,
 .instructions,
 .column1,
 .column2 {
@@ -38,16 +37,8 @@ h3 {
 	position:relative;
 	float:left;
 	}
-.picnet_logo {
-	width:104px;
-	height:110px;
-	//background-image:url('http://www.picnet.com.au/images/picnet_logo_full.png');
-	background-repeat:no-repeat;
-	margin-top:20px;
-	}
 .instructions {
 	width:460px;
-	margin-left:40px;
 	}
 .instructions p {
 	font-size:0.8em

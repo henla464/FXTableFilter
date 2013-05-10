@@ -14,11 +14,13 @@
             // Initialise Plugin
             var options1 = {
             	columnFilters: [ 	
-            				{ columnName: 'col1', displayName: 'Text Column 1', inputType: 'text', toolTipMessage: tooltip},
-            			 	{ columnName: 'col2', displayName: 'Number Column', inputType: 'text', toolTipMessage: tooltip},
-            				{ columnName: 'col3', displayName: 'Yes/No', inputType: 'text'},
-            				{ columnName: 'col4', displayName: 'List column', inputType: 'ddl', selectOptionLabel: 'Select...'},
-            				{ columnName: 'col6', displayName: 'Date column', inputType: 'text'}         	
+            				{ columnName: 'col1', inputType: 'text', toolTipMessage: tooltip},
+            			 	{ columnName: 'col2', inputType: 'text', toolTipMessage: tooltip},
+            				{ columnName: 'col3', inputType: 'text'},
+            				{ columnName: 'col4', inputType: 'ddl', selectOptionLabel: 'Select...'},
+            				{ columnName: 'col5', inputType: 'empty', includeData: false},
+            				{ columnName: 'col6', inputType: 'text'},        	
+            				{ columnName: 'col7', inputType: 'empty', includeData: false}
             			],
             	additionalFilters: [{ control: $('#onlyyes'), inputType: 'custom',
             																matchFunction: function(ctrl, trf, textFilterValue, normalisedTokens) 
@@ -101,7 +103,7 @@
 </head>
 <body>  
 <div class="wrapper">
-	<div class="header">
+	<div class="fxTableFilterHeaderSection">
 		<div class="instructions">
 		<h2>FX Table Filter: Demo</h2>
 		<p>
@@ -125,7 +127,7 @@
 			<h3>Table 1 <span id='rowcount'></span></h3>
 			<table id='demotable1'>
 				<thead>
-					<tr><th>col1</th><th>col2</th><th>col3</th><th>col4</th><th>No Filter</th><th>col6</th><th>Empty</th></tr>
+					<tr><th>Text Column 1</th><th>Number Column</th><th>Yes/No</th><th>List column</th><th>No Filter</th><th>Date column</th><th>Empty</th></tr>
 				</thead>
 				<tbody>
 					<tr><td>Value400</td><td>347</td><td>yes</td><td>Item 2</td><td></td><td>12/10/2009</td><td></td></tr>

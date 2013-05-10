@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>FX Table Filter Demo</title>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="jquery-1.6.2.js"></script>
+    <script type="text/javascript" src="TableFilter.js"></script>
+    <script type="text/javascript" src="jQueryPlugin.js"></script>
+    <script type="text/javascript">
+    
+        $(document).ready(function () {
+			     var se = new picnet.ui.filter.SearchEngine();
+			     var tooltip = 'Quotes (\") match phrases. (not) excludes a match from the results. (or) can be used to do Or searches. I.e. [red or blue] will match either red or blue. Numeric values support >=, >, <=, <, = and != operators.';
+           // Initialise Plugin
+           var options1 = {
+            	columnFilters: [ 	
+            				{ columnName: 'col1', inputType: 'ddl', toolTipMessage: tooltip, onlyText: true},
+            			 	{ columnName: 'col2', inputType: 'text', toolTipMessage: tooltip, onlyText: true},
+            				{ columnName: 'col3', inputType: 'text'},
+            				{ columnName: 'col4', inputType: 'ddl', selectOptionLabel: 'Select...', onlyText: true},
+            				{ columnName: 'col5', inputType: 'empty'},
+             				{ columnName: 'col6', inputType: 'text'},         	
+            				{ columnName: 'col7', inputType: 'empty'}
+             			],
+            	additionalFilters: [],
+                clearFilterControls: [$('#cleanfilters')],
+                filteredRows: function (filterStates, stats) {
+                     setRowCountOnGrid(stats);
+                }
+           };
+
+		  	   var grid = $('#demotable1');
+           grid.tableFilter(options1);
+        });
+  </script>
+    
+
+</head>
+<body>  
+<div class="wrapper">
+	<div class="header">
+		<div class="instructions">
+		<h2>FX Table Filter: Demo</h2>
+		<p>
+		Filter through the cells by typing in the input fields at the top of the columns or by using the dropdown lists.
+		</p>
+		<p>
+			This demo demonstrates how you can filter correctly on columns that contains HTML tags. "Text Column 1" and "Number Column" both contains HTML links in the table cells. For the filtering to only filter using the text of these columns (and not the HTML tags) you must set the "onlyText" option to true for these columns. This option defaults to false due to performance reasons. If this option had not been set on "Number Column" you could have typed for example "href" in its filter and it would have matched all rows.
+		</p>
+		</div>
+	</div>
+	<div class="content">
+		<a id="cleanfilters" href="#">Clear Filters</a>
+		<div class="clear"></div>
+		<br/>
+		<div class="column1">	
+			<table id='demotable1'>
+				<thead>
+						<tr><th>Text Column 1</th><th>Number Column</th><th>Yes/No</th><th>List column</th><th>No Filter</th><th>Date column</th><th>Empty</th></tr></thead>
+			</thead>
+				<tbody>
+					<tr><td><a href="something.htm"><b>
+							Value400
+							</b></a>
+					</td><td>
+						<a href="somethingelse.htm">347</a>
+						</td><td>yes</td><td>Item 2</td><td></td><td>12/10/2009</td><td></td></tr>
+					<tr><td>
+					<a href="something.htm"><b>Value368</b></a>
+					</td><td>
+						<a href="somethingelse.htm">242</a>
+					</td><td>no</td><td>Item 1</td><td></td><td>22/10/2009</td><td></td></tr>
+					<tr><td>
+						<a href="something.htm"><b>Value94</b></a>
+					</td><td>
+						<a href="somethingelse.htm">97</a>
+					</td><td>no</td><td>Item 2</td><td></td><td>23/11/2009</td><td></td></tr>
+					<tr><td>
+					<a href="something.htm"><b>Value491</b></a>
+					</td><td>
+						<a href="somethingelse.htm">114</a>
+					</td><td>yes</td><td>Item 1</td><td></td><td>15/10/2009</td><td></td></tr>
+					<tr><td>
+						<a href="something.htm"><b>Value66</b></a>
+					</td><td>
+						<a href="somethingelse.htm">341</a>
+					</td><td>no</td><td>Item 2</td><td></td><td>25/10/2009</td><td></td></tr>
+					<tr><td>
+						<a href="something.htm"><b>Value413</b></a>
+					</td><td>
+						<a href="somethingelse.htm">297</a>
+					</td><td>no</td><td>Item 3</td><td></td><td>14/11/2009</td><td></td></tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="clear"></div>
+		<hr/>
+	</div>
+</div>
+	</body>
+</html>

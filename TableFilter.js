@@ -4,7 +4,7 @@ window,picnet.ui.filter = window.picnet.ui.filter || {}
 
 
 //////////////
-picnet.ui.filter.TableFilterRow = function(tr, columnNames, onlyTexts) {
+picnet.ui.filter.TableFilterRow = function(tr, columnNames, onlyTexts, includeDatas) {
       this._isMatch = true;
       
       var cells = tr.cells;
@@ -13,14 +13,15 @@ picnet.ui.filter.TableFilterRow = function(tr, columnNames, onlyTexts) {
       for (var cellIndex = 0; cellIndex < cellsLength; cellIndex++)
       {
       	var columnName = columnNames[cellIndex];
-      	if ( columnName )
+        var includeData = includeDatas[cellIndex];
+      	if ( columnName && includeData)
       	{
-    	 	var cellHtml = cells[cellIndex].innerHTML;
-     		this[columnName] = cellHtml;
-     		if (onlyTexts[cellIndex])
-     		{
-     			this[columnName + '_text'] = (cells[cellIndex].innerText || picnet.trim(cells[cellIndex].textContent));
-     		}
+          var cellHtml = cells[cellIndex].innerHTML;
+          this[columnName] = cellHtml;
+          if (onlyTexts[cellIndex])
+          {
+	          this[columnName + '_text'] = (cells[cellIndex].innerText || picnet.trim(cells[cellIndex].textContent));
+          }
      		
       		allRowText += cellHtml;
       		allRowText += '\t';
@@ -51,7 +52,6 @@ picnet.ui.filter.TableFilterOptions.prototype.filterDelay = 200;
 picnet.ui.filter.TableFilterOptions.prototype.enableCookies = true;
 picnet.ui.filter.TableFilterOptions.prototype.filteringRows = function() {};
 picnet.ui.filter.TableFilterOptions.prototype.filteredRows = function() {};
-picnet.ui.filter.TableFilterOptions.prototype.frozenHeaderTable = null;
 
 ///////////////
 
@@ -305,6 +305,7 @@ picnet.ui.filter.TableFilter = function(table, options) {
     
     // column arrays, use column index to index
     this.columnNames = []; // !string[], sparse
+    this.includeDatas = []; // !string[], sparse
   	this.columnFilters = []; // [],sparse
     this.columnFilterCtrls = []; // jquery dom[] , sparse
     this.columnFilterInputTypes = []; // !string[], sparse
@@ -326,14 +327,14 @@ picnet.ui.filter.TableFilter = function(table, options) {
   	this.filterDelay = options.filterDelay;
   	this.filteringRows = options.filteringRows;
   	this.filteredRows = options.filteredRows;
-  	this.lastkeytime;  // number
-	this.lastTimer;  // number  
-	this.cancelQuickFind; // boolean
+    this.lastkeytime;  // number
+    this.lastTimer;  // number  
+    this.cancelQuickFind; // boolean
    	var listid = table.getAttribute('id') || table.getAttribute('name') || '';
     this.cookieId = listid + '_' + (++picnet.ui.filter.TableFilter.filteridx) + '_filters';
     this.search = new picnet.ui.filter.SearchEngine();
 
-	// Initalise columnNames, columnFilters, columnFilterLength
+    // Initalise columnNames, columnFilters, columnFilterLength
     this.initialiseColumnNamesAndColumnFilters(options.columnFilters);
     // Initialise tableFilterRows, tableFilterRowLength
     this.createTableFilterRows();
@@ -358,91 +359,85 @@ picnet.ui.filter.TableFilter.filteridx = 0;
 
 
 picnet.ui.filter.TableFilter.prototype.initialiseColumnNamesAndColumnFilters = function(denseColumnFilters) {	
- 	var headers = this.thead.getElementsByTagName('th'); 
     var columnFilterLength = denseColumnFilters.length;
-    var headerLength = headers.length;
-    this.columnFilterLength = headerLength;
-  	for (var colIdx = 0; colIdx < headerLength; colIdx++) 
-	{
-        var header = headers[colIdx];				
-		var columnName = jQuery.trim(header.innerHTML);
-		for (i = 0; i <  columnFilterLength; i++)
-		{
-			var columnFilter = denseColumnFilters[i];
-			
-			if ( columnFilter.columnName === columnName)
-			{
-				this.columnNames[colIdx] = columnName;
-				this.columnFilters[colIdx] = columnFilter;
-				this.columnOnlyTexts[colIdx] = columnFilter.onlyText;
-			}
-		}   
-	}
+    this.columnFilterLength = columnFilterLength; 
+    for (var colIdx = 0; colIdx < columnFilterLength; colIdx++) 
+	  { 
+      var columnFilter = denseColumnFilters[colIdx];
+	
+      this.includeDatas[colIdx] = (columnFilter.includeData !== false);
+	    this.columnNames[colIdx] = columnFilter.columnName;
+	    this.columnFilters[colIdx] = columnFilter;
+	    this.columnOnlyTexts[colIdx] = columnFilter.onlyText;
+	  }
 }
 
 picnet.ui.filter.TableFilter.prototype.createTableFilterRows = function() {					    
     var columnNames = this.columnNames;
     var tableRows = this.tbody.rows;
     var columnOnlyTexts = this.columnOnlyTexts;
+    var includeDatas = this.includeDatas;
     var tableRowsLength = tableRows.length;
    	this.tableFilterRowLength = tableRowsLength;
    	
     for(var i =0; i < tableRowsLength; i++)
     {
-    	this.tableFilterRows[i] = new picnet.ui.filter.TableFilterRow(tableRows[i], columnNames, columnOnlyTexts);
+    	this.tableFilterRows[i] = new picnet.ui.filter.TableFilterRow(tableRows[i], columnNames, columnOnlyTexts, includeDatas);
   	}	
 };
 	
 picnet.ui.filter.TableFilter.prototype.buildFiltersRow = function() {
     var tr = document.createElement('tr');
     tr.className = 'filters';
-    var headers = this.thead.getElementsByTagName('th');
-    var headerLength = headers.length;
-	for (var colIdx = 0; colIdx < headerLength; colIdx++) {
-        var header = headers[colIdx];
-     	var columnFilter = this.columnFilters[colIdx];
+  	var length = this.columnFilterLength;
+    for (var colIdx = 0; colIdx < length; colIdx++) {
+      var columnFilter = this.columnFilters[colIdx];
      
-		// Create filter cell and add filter control
-		var td = document.createElement('td');
+			// Create filter cell and add filter control
+			var td = document.createElement('td');
 		
-		if (columnFilter)
-		{
-			if (columnFilter.filterClass) { $(td).addClass(columnFilter.filterClass); }
-		
-			var jqFilterCtrl = null;		
-			if (columnFilter.inputType === 'custom' || columnFilter.control)
-			{
-				jqFilterCtrl = columnFilter.control.jquery ? columnFilter.control : $(columnFilter.control);
-			} 
-			else if (columnFilter.inputType === 'text')
-			{
-				jqFilterCtrl = this.getTextFilterJQueryCtrl(colIdx);
-				
-			}
-			else if (columnFilter.inputType === 'ddl')
-			{
-				if (this.columnOnlyTexts[colIdx])
-				{
-					jqFilterCtrl = $(this.getSelectFilterString(colIdx, this.columnNames[colIdx] + '_text'));
-				}
-				else
-				{
-					jqFilterCtrl = $(this.getSelectFilterString(colIdx, this.columnNames[colIdx]));
-				}
-			}
-			
-			// Set column display name in header
-  			header.innerHTML = columnFilter.displayName || this.columnNames[colIdx];
-  			
-  			if (jqFilterCtrl)
-			{
-				td.appendChild(jqFilterCtrl[0]);
-				this.columnFilterCtrls[colIdx] = jqFilterCtrl;
-				this.columnFilterInputTypes[colIdx] = columnFilter.inputType;
-			}
-		}
+      if (columnFilter)
+      {
+        if (columnFilter.filterClass) { $(td).addClass(columnFilter.filterClass); }
 
-  		tr.appendChild(td);	
+	      var jqFilterCtrl = null;		
+	      if (columnFilter.inputType === 'custom' || columnFilter.control)
+	      {
+		      jqFilterCtrl = columnFilter.control.jquery ? columnFilter.control : $(columnFilter.control);
+	      } 
+	      else if (columnFilter.inputType === 'text')
+	      {
+		      jqFilterCtrl = this.getTextFilterJQueryCtrl(colIdx);
+	      }
+	      else if (columnFilter.inputType === 'ddl')
+	      {
+		      if (this.columnOnlyTexts[colIdx])
+		      {
+			      jqFilterCtrl = $(this.getSelectFilterString(colIdx, this.columnNames[colIdx] + '_text'));
+		      }
+		      else
+		      {
+			      jqFilterCtrl = $(this.getSelectFilterString(colIdx, this.columnNames[colIdx]));
+		      }
+	      }
+
+        if (columnFilter.colSpan)
+        {
+          td.colSpan = columnFilter.colSpan;
+        }
+		
+        if (jqFilterCtrl)
+	      {
+		      td.appendChild(jqFilterCtrl[0]);
+		      this.columnFilterCtrls[colIdx] = jqFilterCtrl;
+		      this.columnFilterInputTypes[colIdx] = columnFilter.inputType;
+	      }
+
+        if (columnFilter.createHeaderFilterCell !== false)
+        {
+          tr.appendChild(td);
+        }
+      }
     }	
 	this.thead.appendChild(tr);       
 };
