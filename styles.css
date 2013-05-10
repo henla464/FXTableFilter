@@ -19,7 +19,7 @@ h3 {
 	width:640px;
 	margin:0 auto;
 	}
-.header {
+.fxTableFilterHeaderSection {
 	width:640px;
 	margin-bottom:20px;
 	padding-bottom:10px;
@@ -29,7 +29,7 @@ h3 {
 	font-size:8pt;
 	clear:both;
 	}
-.header,
+.fxTableFilterHeaderSection,
 .instructions,
 .column1,
 .column2 {
