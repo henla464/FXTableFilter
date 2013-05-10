@@ -13,11 +13,15 @@ The rewrite has focused on:
 
 Main disadvantages compared to the PicNet Table Filter
 * Requires a bit more configuration to use
-* The filters matches against everything in the table cells, including any HTML code that may be put there. The main reason for this is performance. (You can write a custom filter function(s) to solve this)
 
 
 Version History
 =============
+
+Version 3
+- Changes to configuration, added support for multiple header rows
+- Added possibility to exclude some columns, so that the values are not stored internally
+- Added several new demo pages
 
 Version 2
 - First version uploaded to github
