@@ -3,6 +3,7 @@ FXTableFilter (Fast eXtensible TableFilter)
 
 FX TableFilter is a JQuery plugin that adds filter capabilities to an HTML table. This plugin is a rewrite of the PicNet Table Filter, it is intended to be Faster and more eXtensible. It works on larger tables and custom filters can be added.
 
+Demos can be found here: [http://henla464.github.io/FXTableFilter/](http://henla464.github.io/FXTableFilter/)
 
 The rewrite has focused on:
 * Performance. To make it work better on larger tables, with more columns and rows.
