@@ -1,3 +1,6 @@
-.htm~
-.js~
-.md~
+*.htm~
+*.js~
+*.md~
+*.txt~
+*.css~
+.gitignore~
