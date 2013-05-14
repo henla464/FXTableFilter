@@ -1,46 +1,43 @@
-window.picnet = window.picnet || {}
-window.picnet.ui = window.picnet.ui || {}
-window,picnet.ui.filter = window.picnet.ui.filter || {}
+window.picnet = window.picnet || {};
+window.picnet.ui = window.picnet.ui || {};
+window.picnet.ui.filter = window.picnet.ui.filter || {};
 
 
 //////////////
 picnet.ui.filter.TableFilterRow = function(tr, columnNames, onlyTexts, includeDatas) {
-      this._isMatch = true;
-      
-      var cells = tr.cells;
-      var allRowText = '';
-      var cellsLength = cells.length;
-      for (var cellIndex = 0; cellIndex < cellsLength; cellIndex++)
-      {
-      	var columnName = columnNames[cellIndex];
-        var includeData = includeDatas[cellIndex];
-      	if ( columnName && includeData)
-      	{
-          var cellHtml = cells[cellIndex].innerHTML;
-          this[columnName] = cellHtml;
-          if (onlyTexts[cellIndex])
-          {
-	          this[columnName + '_text'] = (cells[cellIndex].innerText || picnet.trim(cells[cellIndex].textContent));
-          }
-     		
-      		allRowText += cellHtml;
-      		allRowText += '\t';
-      	}
-      }
-      this._allText = allRowText;
-      this._tr = tr;
-}
+    this._isMatch = true;
 
-picnet.trim = function trim (str) {
-	str = str.replace(/^\s+/, '');
-	for (var i = str.length - 1; i >= 0; i--) {
-		if (/\S/.test(str.charAt(i))) {
-			str = str.substring(0, i + 1);
-			break;
-		}
-	}
-	return str;
-}
+    var cells = tr.cells;
+    var allRowText = '';
+    var cellsLength = cells.length;
+    for (var cellIndex = 0; cellIndex < cellsLength; cellIndex++) {
+        var columnName = columnNames[cellIndex];
+        var includeData = includeDatas[cellIndex];
+        if (columnName && includeData) {
+            var cellHtml = cells[cellIndex].innerHTML;
+            this[columnName] = cellHtml;
+            if (onlyTexts[cellIndex]) {
+                this[columnName + '_text'] = (cells[cellIndex].innerText || picnet.trim(cells[cellIndex].textContent));
+            }
+
+            allRowText += cellHtml;
+            allRowText += '\t';
+        }
+    }
+    this._allText = allRowText;
+    this._tr = tr;
+};
+
+picnet.trim = function trim(str) {
+    str = str.replace(/^\s+/, '');
+    for (var i = str.length - 1; i >= 0; i--) {
+        if (/\S/.test(str.charAt(i))) {
+            str = str.substring(0, i + 1);
+            break;
+        }
+    }
+    return str;
+};
 
 ///////////////
 
@@ -77,14 +74,16 @@ picnet.ui.filter.FilterState.getFilterStatesFromCookie = function(cookieId) {
     return states;
 };
 
-picnet.ui.filter.FilterState.saveFilterStatesToCookie = function(filterStates, cookieId) {			
+picnet.ui.filter.FilterState.saveFilterStatesToCookie = function (filterStates, cookieId) {
     var cookieString = '';
-    var length = filterStates.length
+    var length = filterStates.length;
     for (var i = 0; i < length; i++) {
-        if (cookieString.length > 0) { cookieString += '|' };
-       	cookieString += filterStates[i].toString();
-    }        
-	$.cookie(cookieId, cookieString, {  expires: 999999 });
+        if (cookieString.length > 0) {
+            cookieString += '|';
+        };
+        cookieString += filterStates[i].toString();
+    }
+    $.cookie(cookieId, cookieString, { expires: 999999 });
 };
 
 ///////////////
@@ -296,9 +295,9 @@ picnet.ui.filter.SearchEngine.EPrecedence = {
 //////////////////////
 /* INIT START */
 picnet.ui.filter.TableFilter = function(table, options) {    
-	// DOM Objects
-	this.thead = options.thead ? options.thead : table.getElementsByTagName('thead')[0];    
-	this.tbody = table.getElementsByTagName('tbody')[0];
+	  // DOM Objects
+	  this.thead = options.thead ? options.thead : table.getElementsByTagName('thead')[0];    
+	  this.tbody = table.getElementsByTagName('tbody')[0];
 	
     this.tableFilterRows = []; //  !TableFilterRow[]
     this.tableFilterRowLength = 0;
@@ -337,8 +336,21 @@ picnet.ui.filter.TableFilter = function(table, options) {
     // Initalise columnNames, columnFilters, columnFilterLength
     this.initialiseColumnNamesAndColumnFilters(options.columnFilters);
     // Initialise tableFilterRows, tableFilterRowLength
-    this.createTableFilterRows();
-    // Initialise columnFilterCtrls, columnFilterInputTypes
+    if (options.useAsyncInit)
+    {    
+      this.createTableFilterRowsAsync(0, function() {
+        this.continueInitialization(options);
+      });
+    } else {
+      this.createTableFilterRows();
+      this.continueInitialization(options);
+    }
+};
+
+picnet.ui.filter.TableFilter.filteridx = 0;
+
+picnet.ui.filter.TableFilter.prototype.continueInitialization = function(options) {	
+    // Initialise columnFilterCtrls, columnFilterInputTypes//
     this.buildFiltersRow();
     // check if controls are JQuery object, if not create it
     this.ensureCtrlsAreJQuery(options.clearFilterControls, null);
@@ -346,17 +358,14 @@ picnet.ui.filter.TableFilter = function(table, options) {
     // Initialises additionalFilterCtrls, additionalFilterInputTypes
     // registers listeners to the controls   
     this.registerListenersOnControls();          
-    
+
     var filterStates = picnet.ui.filter.FilterState.getFilterStatesFromCookie();
     if (filterStates)
     {
-    	this.setFilterValueFromFilterState(filterStates);
-    	this.doFiltering(filterStates);
-    } 	
-};
-
-picnet.ui.filter.TableFilter.filteridx = 0;
-
+	    this.setFilterValueFromFilterState(filterStates);
+	    this.doFiltering(filterStates);
+    }
+}
 
 picnet.ui.filter.TableFilter.prototype.initialiseColumnNamesAndColumnFilters = function(denseColumnFilters) {	
     var columnFilterLength = denseColumnFilters.length;
@@ -385,6 +394,32 @@ picnet.ui.filter.TableFilter.prototype.createTableFilterRows = function() {
     	this.tableFilterRows[i] = new picnet.ui.filter.TableFilterRow(tableRows[i], columnNames, columnOnlyTexts, includeDatas);
   	}	
 };
+
+picnet.ui.filter.TableFilter.prototype.createTableFilterRowsAsync = function (startRow, funcContinueInit) {
+    var columnNames = this.columnNames;
+    var tableRows = this.tbody.rows;
+    var columnOnlyTexts = this.columnOnlyTexts;
+    var includeDatas = this.includeDatas;
+    var tableRowsLength = tableRows.length;
+    this.tableFilterRowLength = tableRowsLength;
+
+    var startTicks = new Date().getTime();
+   
+    for (var i = startRow; i < tableRowsLength; i++) {
+        this.tableFilterRows[i] = new picnet.ui.filter.TableFilterRow(tableRows[i], columnNames, columnOnlyTexts, includeDatas);
+        if (i - startRow > 100 && new Date().getTime() - startTicks > 200) {
+          var thisObj = this;
+          var nextRowNo = i+1;
+          setTimeout(function () 
+              { 
+                picnet.ui.filter.TableFilter.prototype.createTableFilterRowsAsync.call(thisObj, nextRowNo, funcContinueInit); 
+              }, 5);
+          return;
+        }
+    }
+    funcContinueInit.call(this);
+};
+
 	
 picnet.ui.filter.TableFilter.prototype.buildFiltersRow = function() {
     var tr = document.createElement('tr');
