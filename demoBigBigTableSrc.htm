@@ -4,13 +4,17 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script type="text/javascript" src="jquery-1.6.2.js"></script>
     <script type="text/javascript" src="TableFilter.js"></script>
-	<script type="text/javascript" src="jQueryPlugin.js"></script>
+	  <script type="text/javascript" src="jQueryPlugin.js"></script>
     <script type="text/javascript">
     
     
         $(document).ready(function () {
-			var se = new picnet.ui.filter.SearchEngine();
-			var tooltip = 'Quotes (\") match phrases. (not) excludes a match from the results. (or) can be used to do Or searches. I.e. [red or blue] will match either red or blue. Numeric values support >=, >, <=, <, = and != operators.';
+          var div = document.createElement("div");
+          div.innerHTML = "<!--[if lt IE 9]><i></i><![endif]-->";
+          var isIeLessThan9 = (div.getElementsByTagName("i").length == 1);
+
+			    var se = new picnet.ui.filter.SearchEngine();
+			    var tooltip = 'Quotes (\") match phrases. (not) excludes a match from the results. (or) can be used to do Or searches. I.e. [red or blue] will match either red or blue. Numeric values support >=, >, <=, <, = and != operators.';
             // Initialise Plugin
             var options1 = {
             	columnFilters: [ 	
@@ -86,17 +90,19 @@
                 clearFilterControls: [$('#cleanfilters')],
                 filteredRows: function (filterStates, stats) {
                      setRowCountOnGrid(stats);
-                }
+                },
+                useAsyncInit: !isIeLessThan9
             };
 
 			var grid = $('#demotable1');
+      $('#rowcount').text('(Rows ' + (grid[0].rows.length-1) + ')');
             grid.tableFilter(options1);
 
            
            	function setRowCountOnGrid(stats) {
                 $('#rowcount').text('(Rows ' + stats.numberOfRowsVisible + ')');
            	}
- 			$('#rowcount').text('(Rows ' + (grid[0].rows.length-2) + ')');
+ 			
 		
         });
   </script>
