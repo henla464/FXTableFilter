@@ -1,5 +1,5 @@
 ﻿
-// This is the only public method.  Initialised like:
+// Initialised like:
 // $(#tableid).tableFilter(options)
 var jq = window['jQuery'];
 if (jq) {
@@ -12,12 +12,16 @@ if (jq) {
                 tf = new picnet.ui.filter.TableFilter(element, options);
             };
 
-            plugin.refresh = function () {
-                tf.refresh();
+            plugin.applyFilter = function () {
+                tf.applyFilter();
             };
             
              plugin.clearAllFilters = function () {
                 tf.clearAllFilters();
+            };
+
+            plugin.reload = function () {
+                tf.reload();
             };
 
             plugin.init();
@@ -38,7 +42,7 @@ if (jq) {
             return this;
         };
 
-        jq['fn']['tableFilterRefresh'] = function (options) {
+        jq['fn']['tableFilterReload'] = function (options) {
         	var length = this.length;
             for (var i = 0 ; i < length ; i++)
             {
@@ -46,7 +50,7 @@ if (jq) {
                 if (undefined !== jq(t).data('tableFilter') &&
 	                 jq(t).data('tableFilter') !== null) {
                     var plugin = jq(t).data('tableFilter');
-                    plugin.refresh();
+                    plugin.reload();
                 }
             }
             return this;
@@ -61,6 +65,19 @@ if (jq) {
 	                 jq(t).data('tableFilter') !== null) {
                     var plugin = jq(t).data('tableFilter');
                     plugin.clearAllFilters();
+                }
+            }
+            return this;
+        };
+
+        jq['fn']['tableFilterApplyFilter'] = function (options) {
+            var length = this.length;
+            for (var i = 0; i < length; i++) {
+                var t = this[i];
+                if (undefined !== jq(t).data('tableFilter') &&
+	                 jq(t).data('tableFilter') !== null) {
+                    var plugin = jq(t).data('tableFilter');
+                    plugin.applyFilter();
                 }
             }
             return this;
