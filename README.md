@@ -17,6 +17,14 @@ Main disadvantages compared to the PicNet Table Filter
 
 Version History
 =============
+Version 5
+- Changed to only use a single tableFilter() function (best practice). 
+  * tableFilterReload() -> is now called like tableFilter('reload')
+  * tableFilterClear -> tableFilter('clearAllFilters')
+  * tableFilterApplyFilter -> tableFilter('applyFilter')
+
+Version 4
+- Added a tableFilterReload() function to reload the internal cache with new/changed/updated rows
 
 Version 3
 - Changes to configuration, added support for multiple header rows
