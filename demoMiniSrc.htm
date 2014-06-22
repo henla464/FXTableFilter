@@ -4,7 +4,6 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="TableFilter.js"></script>
-    <script type="text/javascript" src="jQueryPlugin.js"></script>
     <script type="text/javascript">
     
     
@@ -40,7 +39,7 @@
 	</div>
 	<div class="content">
 
-		<a id="cleanfilters" onclick="javascript:$('#demotable1').clearAllFilters();" href="#">Clear Filters with a javascript jQuery call</a>
+		<a id="cleanfilters" onclick="javascript:$('#demotable1').tableFilter('clearAllFilters');" href="#">Clear Filters with a javascript jQuery call</a>
 		<div class="clear"></div>
 		<br/>
 			<table id='demotable1'>
