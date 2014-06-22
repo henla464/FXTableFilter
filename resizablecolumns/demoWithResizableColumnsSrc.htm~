@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>FX Table Filter Demo</title>
+    <link rel="stylesheet" type="text/css" href="jquery.resizableColumns.css">
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../TableFilter.js"></script>
+    <script type="text/javascript" src="jquery.resizableColumns.js"></script>
+    <script type="text/javascript">
+    
+        $(document).ready(function () {
+
+			     var tooltip = 'Quotes (\") match phrases. (not) excludes a match from the results. (or) can be used to do Or searches. I.e. [red or blue] will match either red or blue. Numeric values support >=, >, <=, <, = and != operators.';
+           // Initialise Plugin
+           var options1 = {
+            	columnFilters: [ 	
+            				{ columnName: 'Model', inputType: 'text', toolTipMessage: tooltip},
+            			 	{ columnName: 'YearFrom', inputType: 'text', toolTipMessage: tooltip},
+            				{ columnName: 'YearTo', inputType: 'text', toolTipMessage: tooltip}
+            			],
+            	additionalFilters: [],
+                clearFilterControls: [$('#cleanfilters')],
+           };
+
+		  	   var grid = $('#demotable1');
+           grid.tableFilter(options1);
+
+           $("#demotable1").resizableColumns();
+        });
+  </script>
+</head>
+<body>  
+<div class="wrapper">
+	<div class="fxTableFilterHeaderSection">
+		<div class="instructions">
+		<h2>FX Table Filter: Demo</h2>
+		<p>
+		Filter through the cells by typing in the input fields at the top of the columns. 		</p>
+		<p>
+			This demo shows that FX Table Filter works fine together with the resizable columns plugin ( <a href="https://github.com/dobtco/jquery-resizable-columns">https://github.com/dobtco/jquery-resizable-columns</a> ).
+		</p>
+		</div>
+	</div>
+	<div class="content">
+		<a id="cleanfilters" href="#">Clear Filters</a>
+		<div class="clear"></div>
+		<br/>
+		<div class="column1">	
+			<table id='demotable1' class="tablesorter" data-resizable-columns-id="demo-table">
+				<thead>
+					<tr>
+					<th data-resizable-column-id="model">Model</td>
+					<th data-resizable-column-id="fromyear">From year</th>
+                                        <th data-resizable-column-id="toyear">To year</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Saab 92</td><td>1949</td><td>1956</td></tr>
+					<tr><td>Saab 93</td><td>1955</td><td>1960</td></tr>
+					<tr><td>Saab GT750</td><td>1958</td><td>1960</td></tr>
+					<tr><td>Saab 94 Sonett I</td><td>1956</td><td>1956</td></tr>
+					<tr><td>Saab 95 estate</td><td>1959</td><td>1978</td></tr>
+					<tr><td>Saab 95 3 cylinder two-stroke</td><td>1960</td><td>1967</td></tr>
+					<tr><td>Saab 95 V4</td><td>1967</td><td>1980</td></tr>
+					<tr><td>Saab 96</td><td>1960</td><td>1980</td></tr>
+					<tr><td>Saab 96 3 cylinder two-stroke</td><td>1960</td><td>1968</td></tr>
+					<tr><td>Saab Sport 3 cylinder two-stroke</td><td>1962</td><td>1966</td></tr>
+					<tr><td>Saab Monte Carlo 850 3 cylinder two-stroke</td><td>1966</td><td>1967</td></tr>
+					<tr><td>Saab 96 V4</td><td>1967</td><td>1980</td></tr>
+					<tr><td>Saab Monte Carlo V4 V4</td><td>1967</td><td>1968</td></tr>
+					<tr><td>Sonett II</td><td>1966</td><td>1970</td></tr>
+					<tr><td>Sonett III</td><td>1970</td><td>1974</td></tr>
+					<tr><td>Saab Formula Junior single seat racing car</td><td>1960</td><td>1960</td></tr>
+					<tr><td>SAABO caravan/camper/travel trailer</td><td>1964</td><td>1968</td></tr>
+					<tr><td>Saab 99</td><td>1968</td><td>1984</td></tr>
+					<tr><td>Saab 900 "Classic"</td><td>1979</td><td>1994</td></tr>
+					<tr><td>Saab 90</td><td>1984</td><td>1987</td></tr>
+					<tr><td>Saab 600</td><td>1985</td><td>1988</td></tr>
+					<tr><td>Saab 9000</td><td>1985</td><td>1998</td></tr>
+					<tr><td>Saab 900 "New Generation"</td><td>1994</td><td>1998</td></tr>
+					<tr><td>Saab 9-3 first generation</td><td>1998</td><td>2002</td></tr>
+					<tr><td>Saab 9-2X</td><td>2005</td><td>2006</td></tr>
+					<tr><td>Saab 9-7X</td><td>2005</td><td>2009</td></tr>
+					<tr><td>Saab 9-5 first generation</td><td>1997</td><td>2009</td></tr>
+					<tr><td>Saab 9-3 SportSedan</td><td>2002</td><td>2011</td></tr>
+					<tr><td>Saab 9-3 Convertible</td><td>2004</td><td>2011</td></tr>
+					<tr><td>Saab 9-3 SportCombi</td><td>2006</td><td>2011</td></tr>
+					<tr><td>Saab 9-3X</td><td>2009</td><td>2011</td></tr>
+					<tr><td>Saab 9-5</td><td>2010</td><td>2011</td></tr>
+					<tr><td>Saab 9-4X</td><td>2011</td><td>2011</td></tr>
+			</tbody>
+			</table>
+		</div>
+		
+		<div class="clear"></div>
+		<hr/>
+	</div>
+</div>
+	</body>
+</html>
