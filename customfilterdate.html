@@ -1,0 +1,114 @@
+
+<h2>Custom filters - date</h2>
+<hr class="titleseparator"/>
+<div class="example">
+	<table id='demotable-customfilter' class="demotable">
+	<thead>
+		<tr><th width="200px">Text Column 1</th><th>Date column</th><th>Empty</th></tr></thead>
+	</thead>
+	<tbody>
+		<tr><td>Value257</td><td>12/01/[year]</td><td></td></tr>
+		<tr><td>Value417</td><td>24/02/[year]</td><td></td></tr>
+		<tr><td>Value91</td><td>13/03/[year]</td><td></td></tr>
+		<tr><td>Value174</td><td>15/04/[year]</td><td></td></tr>
+		<tr><td>Value122</td><td>13/05/[year]</td><td></td></tr>
+		<tr><td>Value251</td><td>16/06/[year]</td><td></td></tr>
+		<tr><td>Value142</td><td>15/07/[year]</td><td></td></tr>
+		<tr><td>Value196</td><td>21/08/[year]</td><td></td></tr>
+		<tr><td>Value421</td><td>18/09/[year]</td><td></td></tr>
+		<tr><td>Value42</td><td>20/10/[year]</td><td></td></tr>
+	</tbody>
+	</table>
+</div>
+<div class="exampledescription">
+	<h3>Description</h3>
+	<p>This example shows how you can add a JQueryUI datepicker control in the filter row. Other custom filter controls can be added in the same way.</p>
+	<h4>Explanation of the options</h4>	
+	<p><b>control:</b> The jquery control to use as custom filter control<br/><b>setupTrigger:</b> A function used to set up the filter control to call the function that triggers the filtering (the function that should be called is passed as argument)<br/><b>getValue:</b> A function that returns the value of the custom filter control<br/><b>setValue:</b> A function that sets the value in the custom filter control (for example after a reloding the page)</br><b>matchFunction:</b> A function that compares the internal row object (trf) to the filter value to determine if they are a match</p>
+</div>
+
+<div class="clearfix"></div>
+<h3>Code</h3>
+
+<div id="codetabs">
+  <ul>
+    <li><a href="#tabs-1">JavaScript</a></li>
+    <li><a href="#tabs-2">HTML</a></li>
+    <li><a href="#tabs-3">CSS</a></li>
+  </ul>
+  <div id="tabs-1">
+    <script type="syntaxhighlighter" class="brush: js; toolbar: false;"><![CDATA[
+           $(document).ready(function () {
+             var tooltip = 'Your tooltip here!';
+             var datepickerInputField = $('<div style="width:120px"><input type="text" maxlength="10" style="width:100px;" id="datepicker"/></div>');
+
+             var optionsCustomFilter1 = {
+               columnFilters: [ 	
+                   { columnName: 'col1', inputType: 'text', toolTipMessage: tooltip},
+                   { columnName: 'colDate', inputType: 'custom', 
+                            control: datepickerInputField,
+                            matchFunction: function(ctrl, trf, textFilterValue, normalisedTokens) 
+                            {
+                              return trf.colDate == textFilterValue;
+                            },
+                            setupTrigger: function(func)
+                            {
+                              $('#datepicker').change(func);
+                            },
+                            getValue: function()
+                            {
+                              return $('#datepicker')[0].value;
+                            },
+                            setValue: function(value)
+                            {
+                              $('#datepicker')[0].value = value;
+                            }
+                   },
+                   { columnName: 'col5', inputType: 'empty'}
+               ]
+             };
+
+             $('#demotable-customfilter').tableFilter(optionsCustomFilter1);
+             $('#datepicker').datepicker({ dateFormat: 'dd/mm/yy', buttonImage: 'datepicker/images/calendar.gif', buttonImageOnly: true, showOn: 'both' });
+           });
+    ]]>
+    </script>
+  </div>
+  <div id="tabs-2">
+     <script type="syntaxhighlighter" class="brush: xml; toolbar: false;"><![CDATA[
+	<table id='demotable-customfilter' class="demotable">
+	<thead>
+		<tr><th width="200px">Text Column 1</th><th>Date column</th><th>Empty</th></tr></thead>
+	</thead>
+	<tbody>
+		<tr><td>Value257</td><td>12/01/[year]</td><td></td></tr>
+		<tr><td>Value417</td><td>24/02/[year]</td><td></td></tr>
+		<tr><td>Value91</td><td>13/03/[year]</td><td></td></tr>
+		<tr><td>Value174</td><td>15/04/[year]</td><td></td></tr>
+		<tr><td>Value122</td><td>13/05/[year]</td><td></td></tr>
+		<tr><td>Value251</td><td>16/06/[year]</td><td></td></tr>
+		<tr><td>Value142</td><td>15/07/[year]</td><td></td></tr>
+		<tr><td>Value196</td><td>21/08/[year]</td><td></td></tr>
+		<tr><td>Value421</td><td>18/09/[year]</td><td></td></tr>
+		<tr><td>Value42</td><td>20/10/[year]</td><td></td></tr>
+	</tbody>
+	</table>
+	]]>
+     </script>
+  </div>
+  <div id="tabs-3">
+    <script type="syntaxhighlighter" class="brush: css; toolbar: false;"><![CDATA[
+       .demotable th {
+          background-color: #333;
+          color: #fff;
+          font-size: 0.85em;
+       }
+       .demotable {
+          border-width: 1px;
+          border-style: solid;
+       }
+    ]]>
+    </script>
+  </div>
+
+</div>

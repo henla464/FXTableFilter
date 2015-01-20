@@ -1,0 +1,91 @@
+
+<h2>Dropdown filter</h2>
+<hr class="titleseparator"/>
+<div class="example">
+<table id='demotable-dropdownfilter' class="demotable">
+<thead>
+	<tr><th>Text Column 1</th><th>Number Column</th><th>Yes/No</th><th>Date column</th></tr>
+</thead>
+<tbody>
+	<tr><td>Value400</td><td>347</td><td>yes</td><td>12/10/2009</td></tr>
+	<tr><td>Value368</td><td>242</td><td>no</td><td>22/10/2009</td></tr>
+	<tr><td>Value94</td><td>97</td><td>no</td><td>23/11/2009</td></tr>
+	<tr><td>Value491</td><td>114</td><td>yes</td><td>15/10/2009</td></tr>
+	<tr><td>Value66</td><td>341</td><td>no</td><td>25/10/2009</td></tr>
+	<tr><td>Value413</td><td>297</td><td>no</td><td>14/11/2009</td></tr>
+	<tr><td>Value467</td><td>50</td><td>no</td><td>24/10/2009</td></tr>
+	<tr><td>Value88</td><td>258</td><td>no</td><td>10/10/2009</td></tr>
+	<tr><td>Value33</td><td>245</td><td>no</td><td>10/10/2009</td></tr>
+	<tr><td>Value265</td><td>396</td><td>no</td><td>18/10/2009</td></tr>
+	<tr><td>Value199</td><td>177</td><td>no</td><td>16/11/2009</td></tr>
+	<tr><td>Value387</td><td>353</td><td>no</td><td>12/10/2009</td></tr>
+	<tr><td>Value370</td><td>464</td><td>yes</td><td>19/10/2009</td></tr>
+	<tr><td>Value326</td><td>292</td><td>yes</td><td>17/10/2009</td></tr>
+	<tr><td>Value421</td><td>417</td><td>no</td><td>25/10/2009</td></tr>
+	<tr><td>Value177</td><td>315</td><td>no</td><td>25/11/2009</td></tr>
+	<tr><td>Value112</td><td>487</td><td>no</td><td>21/10/2009</td></tr>
+</tbody>
+</table>
+</div>
+<div class="exampledescription">
+	<h3>Description</h3>
+	<p>The Yes/No column has a dropdown list instead of a textbox in the filter row. When the filter type is set to 'ddl' then a dropdown list populated with all distinct values in the column will be used instead of a textbox</p>
+</div>
+
+<div class="clearfix"></div>
+<h3>Code</h3>
+
+<div id="codetabs">
+  <ul>
+    <li><a href="#tabs-1">JavaScript</a></li>
+    <li><a href="#tabs-2">HTML</a></li>
+    <li><a href="#tabs-3">CSS</a></li>
+  </ul>
+  <div id="tabs-1">
+	<pre class="brush: js; toolbar: false;">
+           $(document).ready(function () {
+             var tooltip = 'Your tooltip here!';
+             // Initialise Plugin
+             var optionsbigtable = {
+               columnFilters: [ 	
+                  { columnName: 'col1', inputType: 'text', toolTipMessage: tooltip},
+                  { columnName: 'col2', inputType: 'text', toolTipMessage: tooltip},
+                  { columnName: 'col3', inputType: 'ddl'},
+                  { columnName: 'col4', inputType: 'text'}
+               ]
+             };
+ 
+             $('#demotable-bigtable').tableFilter(optionsbigtable);
+           });
+        </pre>
+  </div>
+  <div id="tabs-2">
+     <pre class="brush: xml; toolbar: false;">
+	<table id='demotable-dropdownfilter' class="demotable">
+		<thead>
+			<tr><th>Text Column 1</th><th>Number Column</th><th>Yes/No</th><th>Date column</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>Value400</td><td>347</td><td>yes</td><td>12/10/2009</td></tr>
+			<tr><td>Value368</td><td>242</td><td>no</td><td>22/10/2009</td></tr>
+			<!--... and so on ...-->
+			<tr><td>Value112</td><td>487</td><td>no</td><td>21/10/2009</td></tr>
+		</tbody>
+	</table>
+     </pre>
+  </div>
+  <div id="tabs-3">
+    <pre class="brush: css; toolbar: false;">
+       .demotable th {
+          background-color: #333;
+          color: #fff;
+          font-size: 0.85em;
+       }
+       .demotable {
+          border-width: 1px;
+          border-style: solid;
+       }
+    </pre>
+  </div>
+
+</div>

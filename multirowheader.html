@@ -1,0 +1,165 @@
+
+<h2>Multirow header</h2>
+<hr class="titleseparator"/>
+<div class="example">
+	<table id='demotable-multirowheader' class="demotable">
+				<thead>
+					<tr><th rowspan="2">Model</th><th colspan="2" width="220">Manufacturing period</th></tr>
+					<tr><th>From year</th><th>To year</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Saab 92</td><td>1949</td><td>1956</td></tr>
+					<tr><td>Saab 93</td><td>1955</td><td>1960</td></tr>
+					<tr><td>Saab GT750</td><td>1958</td><td>1960</td></tr>
+					<tr><td>Saab 94 Sonett I</td><td>1956</td><td>1956</td></tr>
+					<tr><td>Saab 95 estate</td><td>1959</td><td>1978</td></tr>
+					<tr><td>Saab 95 3 cylinder two-stroke</td><td>1960</td><td>1967</td></tr>
+					<tr><td>Saab 95 V4</td><td>1967</td><td>1980</td></tr>
+					<tr><td>Saab 96</td><td>1960</td><td>1980</td></tr>
+					<tr><td>Saab 96 3 cylinder two-stroke</td><td>1960</td><td>1968</td></tr>
+					<tr><td>Saab Sport 3 cylinder two-stroke</td><td>1962</td><td>1966</td></tr>
+					<tr><td>Saab Monte Carlo 850 3 cylinder two-stroke</td><td>1966</td><td>1967</td></tr>
+					<tr><td>Saab 96 V4</td><td>1967</td><td>1980</td></tr>
+					<tr><td>Saab Monte Carlo V4 V4</td><td>1967</td><td>1968</td></tr>
+					<tr><td>Sonett II</td><td>1966</td><td>1970</td></tr>
+					<tr><td>Sonett III</td><td>1970</td><td>1974</td></tr>
+					<tr><td>Saab Formula Junior single seat racing car</td><td>1960</td><td>1960</td></tr>
+					<tr><td>SAABO caravan/camper/travel trailer</td><td>1964</td><td>1968</td></tr>
+					<tr><td>Saab 99</td><td>1968</td><td>1984</td></tr>
+					<tr><td>Saab 900 "Classic"</td><td>1979</td><td>1994</td></tr>
+					<tr><td>Saab 90</td><td>1984</td><td>1987</td></tr>
+					<tr><td>Saab 600</td><td>1985</td><td>1988</td></tr>
+					<tr><td>Saab 9000</td><td>1985</td><td>1998</td></tr>
+					<tr><td>Saab 900 "New Generation"</td><td>1994</td><td>1998</td></tr>
+					<tr><td>Saab 9-3 first generation</td><td>1998</td><td>2002</td></tr>
+					<tr><td>Saab 9-2X</td><td>2005</td><td>2006</td></tr>
+					<tr><td>Saab 9-7X</td><td>2005</td><td>2009</td></tr>
+					<tr><td>Saab 9-5 first generation</td><td>1997</td><td>2009</td></tr>
+					<tr><td>Saab 9-3 SportSedan</td><td>2002</td><td>2011</td></tr>
+					<tr><td>Saab 9-3 Convertible</td><td>2004</td><td>2011</td></tr>
+					<tr><td>Saab 9-3 SportCombi</td><td>2006</td><td>2011</td></tr>
+					<tr><td>Saab 9-3X</td><td>2009</td><td>2011</td></tr>
+					<tr><td>Saab 9-5</td><td>2010</td><td>2011</td></tr>
+					<tr><td>Saab 9-4X</td><td>2011</td><td>2011</td></tr>
+			</tbody>
+			</table>
+</div>
+<div class="exampledescription">
+	<h3>Description</h3>
+	<p>This example shows how you can add a JQueryUI datepicker control in the filter row. Other custom filter controls can be added in the same way.</p>
+	<h4>Explanation of the options</h4>	
+	<p><b>control:</b> The jquery control to use as custom filter control<br/><b>setupTrigger:</b> A function used to set up the filter control to call the function that triggers the filtering (the function that should be called is passed as argument)<br/><b>getValue:</b> A function that returns the value of the custom filter control<br/><b>setValue:</b> A function that sets the value in the custom filter control (for example after a reloding the page)</br><b>matchFunction:</b> A function that compares the internal row object (trf) to the filter value to determine if they are a match</p>
+</div>
+
+<div class="clearfix"></div>
+<h3>Code</h3>
+
+<div id="codetabs">
+  <ul>
+    <li><a href="#tabs-1">JavaScript</a></li>
+    <li><a href="#tabs-2">HTML</a></li>
+    <li><a href="#tabs-3">CSS</a></li>
+  </ul>
+  <div id="tabs-1">
+    <script type="syntaxhighlighter" class="brush: js; toolbar: false;"><![CDATA[
+           $(document).ready(function () {
+             var tooltip = 'Your tooltip here!';
+             var yearPickerInputField = $('<div style="width:220px">Year in period: <input type="text" maxlength="4" size="4" id="yearpicker" /></div>');
+             
+             var se = new picnet.ui.filter.SearchEngine();
+             var optionsMultirowHeader = {
+                columnFilters: [ 	
+                      { columnName: 'Model', inputType: 'text', toolTipMessage: tooltip},
+                      { columnName: 'YearFrom', inputType: 'custom', 
+                            colSpan: 2, 
+                            control: yearPickerInputField,
+                            matchFunction: function(ctrl, trf, textFilterValue, normalisedTokens) 
+                                 {
+                                    if (textFilterValue.length < 4) return true;
+                                    return trf.YearFrom <= textFilterValue && textFilterValue <= trf.YearTo; 
+                                 },
+                                 setupTrigger: function(func)
+                                 {
+                                    $('#yearpicker').keyup(func);
+                                 },
+                                 getValue: function()
+                                 {
+                                    return $('#yearpicker')[0].value;
+                                 },
+                                 setValue: function(value)
+                                 {
+                                    $('#yearpicker')[0].value = value;
+                                 }
+                      },
+                      { columnName: 'YearTo', createHeaderFilterCell: false}
+                ]
+             };
+
+             $('#demotable-multirowheader').tableFilter(optionsMultirowHeader);
+             $('#datepicker').datepicker({ dateFormat: 'dd/mm/yy', buttonImage: 'datepicker/images/calendar.gif', buttonImageOnly: true, showOn: 'both' });
+           });
+    ]]>
+    </script>
+  </div>
+  <div id="tabs-2">
+     <script type="syntaxhighlighter" class="brush: xml; toolbar: false;"><![CDATA[
+	<table id='demotable-multirowheader' class="demotable">
+				<thead>
+					<tr><th rowspan="2">Model</th><th colspan="2" width="220">Manufacturing period</th></tr>
+					<tr><th>From year</th><th>To year</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Saab 92</td><td>1949</td><td>1956</td></tr>
+					<tr><td>Saab 93</td><td>1955</td><td>1960</td></tr>
+					<tr><td>Saab GT750</td><td>1958</td><td>1960</td></tr>
+					<tr><td>Saab 94 Sonett I</td><td>1956</td><td>1956</td></tr>
+					<tr><td>Saab 95 estate</td><td>1959</td><td>1978</td></tr>
+					<tr><td>Saab 95 3 cylinder two-stroke</td><td>1960</td><td>1967</td></tr>
+					<tr><td>Saab 95 V4</td><td>1967</td><td>1980</td></tr>
+					<tr><td>Saab 96</td><td>1960</td><td>1980</td></tr>
+					<tr><td>Saab 96 3 cylinder two-stroke</td><td>1960</td><td>1968</td></tr>
+					<tr><td>Saab Sport 3 cylinder two-stroke</td><td>1962</td><td>1966</td></tr>
+					<tr><td>Saab Monte Carlo 850 3 cylinder two-stroke</td><td>1966</td><td>1967</td></tr>
+					<tr><td>Saab 96 V4</td><td>1967</td><td>1980</td></tr>
+					<tr><td>Saab Monte Carlo V4 V4</td><td>1967</td><td>1968</td></tr>
+					<tr><td>Sonett II</td><td>1966</td><td>1970</td></tr>
+					<tr><td>Sonett III</td><td>1970</td><td>1974</td></tr>
+					<tr><td>Saab Formula Junior single seat racing car</td><td>1960</td><td>1960</td></tr>
+					<tr><td>SAABO caravan/camper/travel trailer</td><td>1964</td><td>1968</td></tr>
+					<tr><td>Saab 99</td><td>1968</td><td>1984</td></tr>
+					<tr><td>Saab 900 "Classic"</td><td>1979</td><td>1994</td></tr>
+					<tr><td>Saab 90</td><td>1984</td><td>1987</td></tr>
+					<tr><td>Saab 600</td><td>1985</td><td>1988</td></tr>
+					<tr><td>Saab 9000</td><td>1985</td><td>1998</td></tr>
+					<tr><td>Saab 900 "New Generation"</td><td>1994</td><td>1998</td></tr>
+					<tr><td>Saab 9-3 first generation</td><td>1998</td><td>2002</td></tr>
+					<tr><td>Saab 9-2X</td><td>2005</td><td>2006</td></tr>
+					<tr><td>Saab 9-7X</td><td>2005</td><td>2009</td></tr>
+					<tr><td>Saab 9-5 first generation</td><td>1997</td><td>2009</td></tr>
+					<tr><td>Saab 9-3 SportSedan</td><td>2002</td><td>2011</td></tr>
+					<tr><td>Saab 9-3 Convertible</td><td>2004</td><td>2011</td></tr>
+					<tr><td>Saab 9-3 SportCombi</td><td>2006</td><td>2011</td></tr>
+					<tr><td>Saab 9-3X</td><td>2009</td><td>2011</td></tr>
+					<tr><td>Saab 9-5</td><td>2010</td><td>2011</td></tr>
+					<tr><td>Saab 9-4X</td><td>2011</td><td>2011</td></tr>
+			</tbody>
+			</table>
+	]]>
+     </script>
+  </div>
+  <div id="tabs-3">
+    <script type="syntaxhighlighter" class="brush: css; toolbar: false;"><![CDATA[
+       .demotable th {
+          background-color: #333;
+          color: #fff;
+          font-size: 0.85em;
+       }
+       .demotable {
+          border-width: 1px;
+          border-style: solid;
+       }
+    ]]>
+    </script>
+  </div>
+
+</div>

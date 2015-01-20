@@ -1,0 +1,273 @@
+<h2>API - .tableFilter(options)</h2>
+<hr class="titleseparator"/>
+<br/>
+
+TableFilter is initialized using the .tableFilter function with an options object:
+
+<pre class="brush: xml; toolbar: false;">
+	<script type="text/javascript" src="TableFilter.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+   		   var options = { 
+					// see below	
+				 };
+		   $('#theTable').tableFilter(options);
+		});
+	</script>
+</pre>
+
+<br/>
+<br/>
+
+<h3>Options</h3>
+<div><span class="optionentitytitle">Type:</span> Object</div>
+<div>All settings for the table filter</div>
+<ul class="apilist">
+<li>
+  <div class="optionentity">thead (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> HTML or JQuery object representing a thead</div>
+  <div><span class="optionentitytitle">Description:</span> If the thead where the filters should be added is not in the table that is filtered (could be the case when using a fixed header) then this should be the HTML or JQuery wrapped thead object</div>
+</li>
+<li>
+  <div class="optionentity">columnFilters (default: empty array)</div>
+  <div><span class="optionentitytitle">Type:</span> Array of ColumnFilter objects</div>
+  <div><span class="optionentitytitle">Description:</span> The ColumnFilter objects defines each column in the table and the filter controls that should be used</div>
+</li>           
+<li>
+  <div class="optionentity">additionalFilters (default: empty array)</div>
+  <div><span class="optionentitytitle">Type: </span>Array of AdditionalFilter objects</div>
+  <div><span class="optionentitytitle">Description: </span>This is should be an array of AdditionalFilter objects if filters outside the of the columns should be used. See more information about the AdditionalFilter object below.</div>
+</li>   
+<li>
+  <div class="optionentity">clearFilterControls (default: empty array)</div>
+  <div><span class="optionentitytitle">Type:</span> Array of HTML or JQuery objects</div>
+  <div><span class="optionentitytitle">Description:</span> These HTML or JQuery objects will clear the filters when they are clicked.</div>
+</li>   
+<li>
+  <div class="optionentity">filterDelay (default: 200)</div>
+  <div><span class="optionentitytitle">Type:</span> integer</div>
+  <div><span class="optionentitytitle">Description:</span> The delay between the last filter expression change and when the filtering starts. Given in number of milliseconds.</div>
+</li>
+<li>
+  <div class="optionentity">enableCookies (default: true)</div>
+  <div><span class="optionentitytitle">Type:</span> boolean</div>
+  <div><span class="optionentitytitle">Description:</span> Filter expressions will be saved in a cookie and persisted over postbacks when this is set to true.</div>
+</li>         
+<li>
+  <div class="optionentity">filteringRows (default: function() {})</div>
+  <div><span class="optionentitytitle">Type:</span> function, void function(FilterStates)</div>
+  <div><span class="optionentitytitle">Description: Called before filering starts with information about the filters. See FilterStates below.</span> </div>
+</li>
+<li>
+  <div class="optionentity">filteredRows (default: function() {})</div>
+  <div><span class="optionentitytitle">Type:</span> function, void function(FilterStates, Statistics)</div>
+  <div><span class="optionentitytitle">Description:</span> Called after filtering has finished with information about filters and the number of rows shows. See FilterStates and Statistics below.</div>
+</li>
+<li>
+  <div class="optionentity">shouldFilterRow (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> function, boolean function(Integer, picnet.ui.filter.TableFilterRow)</div>
+  <div><span class="optionentitytitle">Description:</span> If set, this function is called for each row in the table to determine if filtering should be applied to it or not. The first argument is the index of the row, and the second one is FXTableFilters internal data representation of the row.</div>
+</li>
+</ul>
+
+<h3>ColumnFilter</h3>
+<div><span class="optionentitytitle">Type:</span> Object</div>
+<div>The filter and filtercontrol settings for a column in the table</div>    
+<ul class="apilist">
+<li>
+  <div class="optionentity">columnName (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> A name for the column that is a valid JavaScript property name</div>
+</li>
+<li>
+  <div class="optionentity">toolTipMessage (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> The tooltip that should be used for the filter control.</div>
+</li>
+<li>
+  <div class="optionentity">defaultText (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> Default string that should be set in the filter control</div>
+</li>
+<li>
+  <div class="optionentity">onlyText (default: false)</div>
+  <div><span class="optionentitytitle">Type:</span> Boolean</div>
+  <div><span class="optionentitytitle">Description:</span> If set to true then only the text (without the HTML) is extracted from the table cells. There is a performance penalty to doing this and it therefore defaults to false</div>
+</li>
+<li>
+  <div class="optionentity">includeData (default: true)</div>
+  <div><span class="optionentitytitle">Type:</span> Boolean</div>
+  <div><span class="optionentitytitle">Description:</span> Add the data of this column to the internal representation of the row (picnet.ui.filter.TableFilterRow), that is used when performing the filtering. If the column is not used in any filtering expression then you can set this property to false to improve performance and reduce memory consumption.</div>
+</li>
+<li>
+  <div class="optionentity">filterClass (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> The css class that is added to the &lt;td&gt; tag created in the header for the filter control.</div>
+</li>
+<li>
+  <div class="optionentity">colSpan (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> Integer</div>
+  <div><span class="optionentitytitle">Description:</span> The colspan to use on the &lt;td&gt; tag created in the header for the filter control.</div>
+</li>
+<li>
+  <div class="optionentity">createHeaderFilterCell (default: true)</div>
+  <div><span class="optionentitytitle">Type:</span> Boolean</div>
+  <div><span class="optionentitytitle">Description:</span> Set to true if a &lt;td&gt; tag shouldn't be created in the header for this column. Typically used when a previous column used colSpan larger than 1.</div>
+</li>
+<li>
+  <div class="optionentity">inputType (default: text)</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> The possible values: 'text', 'ddl', 'custom' or 'empty'. When set to null or 'text' a textbox will be used as filter control, when set to 'ddl' then a dropdown list will be used. When set to 'custom' you will have to set the control in the control property and supply functions for getValue, setValue and setupTrigger. When set to 'empty' then no filter control will be created.</div>
+</li>
+<li>
+  <div class="optionentity">getValue (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> function, String function()</div>
+  <div><span class="optionentitytitle">Description:</span> Function without arguments that returns the value of the filter control. This is used only when inputType is set to 'custom' and must be supplied then.</div>
+</li>
+<li>
+  <div class="optionentity">setValue (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> function, function(String)</div>
+  <div><span class="optionentitytitle">Description:</span> Function used to set a string value in the filter control. This is used only when inputType is set to 'custom' and must be supplied then.</div>
+</li>
+<li>
+  <div class="optionentity">setupTrigger (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> function, function(func)</div>
+  <div><span class="optionentitytitle">Description:</span> Function used to setup the triggering of filtering. Set up your custom filter control to call the function supplied as argument when it changes. This is used only when inputType is set to 'custom' and must be supplied then if filtering should happen automatically.</div>
+</li>
+<li>
+  <div class="optionentity">matchFunction (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> function, Boolean function(ctrl, picnet.ui.filter.TableFilterRow, textFilterValue, normalisedTokens)</div>
+  <div><span class="optionentitytitle">Description:</span> Function that determines if the row matches the custom filter control. First argument is the filter control, second is the internal representation of the row, third the value from the filter control and the fourth is a normalised post fix array of token strings created from the the filter value (third parameter). This is used only when inputType is set to 'custom' and must be supplied then.</div>
+</div>
+<li>
+  <div class="optionentity">control (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> HTML or JQuery object</div>
+  <div><span class="optionentitytitle">Description:</span> The control object used to filter this column</div>
+</li>
+<li>
+  <div class="optionentity deprecated">defaultTextColor (default: null)</div>
+</li>
+<li>
+  <div class="optionentity deprecated">normalTextColor (default: null)</div>
+</li>
+</ul>
+
+
+<h3>AdditionalFilter</h3>
+<div><span class="optionentitytitle">Type:</span> Object</div>
+<div>The filter and filtercontrol settings for additional filter controls that live outside the table</div>    
+<ul class="apilist">
+<li>
+  <div class="optionentity">toolTipMessage (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> The tooltip that should be used for the filter control.</div>
+</li>
+<li>
+  <div class="optionentity">defaultText (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> Default string that should be set in the filter control</div>
+</li>
+<li>
+  <div class="optionentity">inputType (default: text)</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> The possible values, 'text', 'ddl' or 'custom'. When set to null or 'text' a textbox will be used as filter control, when set to 'ddl' then a dropdown list will be used. When set to 'custom' you will have to set the control in the control property and supply functions for getValue, setValue and setupTrigger.</div>
+</li>
+<li>
+  <div class="optionentity">getValue (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> function, String function()</div>
+  <div><span class="optionentitytitle">Description:</span> Function without arguments that returns the value of the filter control. This is used only when inputType is set to 'custom' and must be supplied then.</div>
+</li>
+<li>
+  <div class="optionentity">setValue (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> function, function(String)</div>
+  <div><span class="optionentitytitle">Description:</span> Function used to set a string value in the filter control. This is used only when inputType is set to 'custom' and must be supplied then.</div>
+</li>
+<li>
+  <div class="optionentity">setupTrigger (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> function, function(func)</div>
+  <div><span class="optionentitytitle">Description:</span> Function used to setup the triggering of filtering. Set up your custom filter control to call the function supplied as argument when it changes. This is used only when inputType is set to 'custom' and must be supplied then if filtering should happen automatically.</div>
+</li>
+<li>
+  <div class="optionentity">matchFunction (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> function, Boolean function(ctrl, picnet.ui.filter.TableFilterRow, textFilterValue, normalisedTokens)</div>
+  <div><span class="optionentitytitle">Description:</span> Function that determines if the row matches the custom filter control. First argument is the filter control, second is the internal representation of the row, third the value from the filter control and the fourth is a normalised post fix array of token strings created from the the filter value (third parameter). This is used only when inputType is set to 'custom' and must be supplied then.</div>
+</div>
+<li>
+  <div class="optionentity">control (default: null)</div>
+  <div><span class="optionentitytitle">Type:</span> HTML or JQuery object</div>
+  <div><span class="optionentitytitle">Description:</span> The control object used to filter this column</div>
+</li>
+<li>
+  <div class="optionentity deprecated">defaultTextColor (default: null)</div>
+</li>
+<li>
+  <div class="optionentity deprecated">normalTextColor (default: null)</div>
+</li>
+</ul>
+
+
+
+<h3>FilterStates</h3>
+<div><span class="optionentitytitle">Type:</span> Object, picnet.ui.filter.FilterState</div>
+<div>The filter and filtercontrol settings for additional filter controls that live outside the table</div>    
+<ul class="apilist">
+<li>
+  <div class="optionentity">id</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> The HTML object id of the filter control.</div>
+</li>
+<li>
+  <div class="optionentity">columnIndex</div>
+  <div><span class="optionentitytitle">Type:</span> Integer</div>
+  <div><span class="optionentitytitle">Description:</span> The index of the column filter. If it is an additional filter then this is a negative value.</div>
+</li>
+<li>
+  <div class="optionentity">value</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> The value of the filter control.</div>
+</li>
+<li>
+  <div class="optionentity">type</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> This is the inputType (see ColumnFilter above). Can be 'text', 'ddl' or 'custom'.</div>
+</li>
+</ul>
+
+<h3>Statistics</h3> 
+<div><span class="optionentitytitle">Type:</span> Object</div>
+<div>The filter and filtercontrol settings for additional filter controls that live outside the table</div>    
+<ul class="apilist">
+<li>
+  <div class="optionentity">totalNumberOfRows</div>
+  <div><span class="optionentitytitle">Type:</span> Integer</div>
+  <div><span class="optionentitytitle">Description:</span> The total number of rows in the table</div>
+</li>
+<li>
+  <div class="optionentity">numberOfRowsVisible</div>
+  <div><span class="optionentitytitle">Type:</span> Integer</div>
+  <div><span class="optionentitytitle">Description:</span> Number of rows that are visible with the current filtering</div>
+</li>
+</ul>
+
+<h3>picnet.ui.filter.TableFilterRow</h3>
+<div><span class="optionentitytitle">Type:</span> Object</div>
+<div>The internal representation of a table row. This object is sent to the shouldFilterRow function if one is set up. Can be used for custom filtering logic.</div>    
+<ul class="apilist">
+<li>
+  <div class="optionentity">_isMatch (default: true)</div>
+  <div><span class="optionentitytitle">Type:</span> bool</div>
+  <div><span class="optionentitytitle">Description:</span> Used to indicate if the row matches the filters</div>
+</li>
+<li>
+  <div class="optionentity">_allText</div>
+  <div><span class="optionentitytitle">Type:</span> String</div>
+  <div><span class="optionentitytitle">Description:</span> A concatenation of the text in each HTML cell, with a tabcharacter as separator. If onlyText is set to true for the column, then only the text of the cell is used. Otherwise all the content, inclusing HTML code.</div>
+</li>
+<li>
+  <div class="optionentity">_tr</div>
+  <div><span class="optionentitytitle">Type:</span> tr HTML object</div>
+  <div><span class="optionentitytitle">Description:</span> The HTML table row object</div>
+</li>
+
+</ul>
+

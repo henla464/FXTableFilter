@@ -1,0 +1,287 @@
+
+<h2>jExpand</h2>
+<hr class="titleseparator"/>
+<div class="example">
+<table id="demotable-jexpand">
+        <thead>
+	<tr>
+            <th>Country</th>
+            <th>Population</th>
+            <th>Area</th>
+            <th>Official lang.</th>
+            <th></th>
+        </tr>
+	</thead>
+	<tbody>
+        <tr>
+            <td>US of America</td>
+            <td>306,939,000</td>
+            <td>9,826,630 km2</td>
+            <td>English</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="jExpand/125px-Flag_of_the_United_States.svg.png" alt="Flag of USA" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/Usa">USA on Wikipedia</a></li>
+                    <li><a href="http://nationalatlas.gov/">National Atlas of the United States</a></li>
+                    <li><a href="http://www.nationalcenter.org/HistoricalDocuments.html">Historical Documents</a></li>
+                 </ul>   
+            </td>
+        </tr>
+        <tr>
+            <td>United Kingdom </td>
+            <td>61,612,300</td>
+            <td>244,820 km2</td>
+            <td>English</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="jExpand/125px-Flag_of_the_United_Kingdom.svg.png" alt="Flag of UK" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/United_kingdom">UK on Wikipedia</a></li>
+                    <li><a href="http://www.visitbritain.com/">Official tourist guide to Britain</a></li>
+                    <li><a href="http://www.statistics.gov.uk/StatBase/Product.asp?vlnk=5703">Official 
+                        Yearbook of the United Kingdom</a></li>
+                </ul>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>India</td>
+            <td>1,147,995,904</td>
+            <td>3,287,240 km2</td>
+            <td>Hindi, English</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="jExpand/125px-Flag_of_India.svg.png" alt="Flag of India" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/India">India on Wikipedia</a></li>
+                    <li><a href="http://india.gov.in/">Government of India</a></li>
+                    <li><a href="http://wikitravel.org/en/India">India travel guide</a></li>
+                 </ul>   
+            
+            </td>
+        </tr>
+        <tr>
+            <td>Canada</td>
+            <td>33,718,000</td>
+            <td>9,984,670 km2</td>
+            <td>English, French</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="jExpand/125px-Flag_of_Canada.svg.png" alt="Flag of Canada" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/Canada">Canada on Wikipedia</a></li>
+                    <li><a href="http://atlas.gc.ca/site/index.html" >Official 
+                        Government of Canada online Atlas of Canada</a></li>
+                    <li><a href="http://wikitravel.org/en/Canada">Canada travel guide</a></li>
+                 </ul>   
+            </td>
+        </tr>
+        <tr>
+            <td>Germany</td>
+            <td>82,060,000</td>
+            <td>357,021 km2</td>
+            <td>German</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="jExpand/125px-Flag_of_Germany.svg.png" alt="Flag of Germany" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/Germany">Germany on Wikipedia</a></li>
+                    <li><a href="http://www.deutschland.de/home.php?lang=2">Deutschland.de Official Germany portal</a></li>
+                    <li><a href="http://www.cometogermany.com/">Germany Travel Info</a></li>
+                 </ul>   
+            </td>
+        </tr>
+	</tbody>
+    </table>
+    <em>* Information taken from Wikipedia</em>
+</div>
+<div class="exampledescription">
+	<h3>Description</h3>
+	<p>This example demonstrates how you can use the JExpand JQuery plugin to make every second row expandable. </p>
+	<h4>Explanation of the options</h4>
+	<p><b>shouldFilterRow:</b> Function that returns true if the row should checked agains the filter. Rows for which this function returns false is not touched.<br><b>filteredRows:</b> This function is called after filtering of rows are done. It is used here to hide the expandable row when its parent row is hidden by the filter.</p>
+   <p>See <a href="http://www.jankoatwarpspeed.com/post/2009/07/19/Expand-table-rows-with-jQuery-jExpand-plugin.aspx">Expand table rows with jQuery - jExpand plugin</a> for info about the JExpand plugin</p>
+</div>
+
+<div class="clearfix"></div>
+<h3>Code</h3>
+
+<div id="codetabs">
+  <ul>
+    <li><a href="#tabs-1">JavaScript</a></li>
+    <li><a href="#tabs-2">HTML</a></li>
+    <li><a href="#tabs-3">CSS</a></li>
+  </ul>
+  <div id="tabs-1">
+	<pre class="brush: js; toolbar: false;">
+           $(document).ready(function () {
+             var tooltip = 'Your tooltip here!';
+             $("#demotable-jexpand").jExpand();
+
+             var optionsjexpand = {
+               columnFilters: [ 	
+                   { columnName: 'Country', inputType: 'text', toolTipMessage: tooltip},
+                   { columnName: 'Population', inputType: 'text', toolTipMessage: tooltip},
+                   { columnName: 'Area', inputType: 'text'},
+                   { columnName: 'Official languages', inputType: 'ddl', selectOptionLabel: 'Select...'},
+                   { columnName: 'col5', inputType: 'empty'}
+             	],
+                shouldFilterRow: function(rowIndex, tr) { return (rowIndex % 2 !== 0); },
+                filteredRows: function(filterStates, stats) {
+                     $("#demotable-jexpand").find("tr.odd").each(function( index ) {
+                        if (!$(this).is(":visible")) {
+                           $(this).next().hide();
+                        }
+                     });
+                }
+             };
+
+             $('#demotable-jexpand').tableFilter(optionsjexpand);
+           });
+        </pre>
+  </div>
+  <div id="tabs-2">
+     <script type="syntaxhighlighter" class="brush: xml; toolbar: false;"><![CDATA[
+	<table id="demotable-jexpand">
+        <thead>
+	<tr>
+            <th>Country</th>
+            <th>Population</th>
+            <th>Area</th>
+            <th>Official lang.</th>
+            <th></th>
+        </tr>
+	</thead>
+	<tbody>
+        <tr>
+            <td>US of America</td>
+            <td>306,939,000</td>
+            <td>9,826,630 km2</td>
+            <td>English</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="125px-Flag_of_the_United_States.svg.png" alt="Flag of USA" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/Usa">USA on Wikipedia</a></li>
+                    <li><a href="http://nationalatlas.gov/">National Atlas of the United States</a></li>
+                    <li><a href="http://www.nationalcenter.org/HistoricalDocuments.html">Historical Documents</a></li>
+                 </ul>   
+            </td>
+        </tr>
+        <tr>
+            <td>United Kingdom </td>
+            <td>61,612,300</td>
+            <td>244,820 km2</td>
+            <td>English</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="125px-Flag_of_the_United_Kingdom.svg.png" alt="Flag of UK" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/United_kingdom">UK on Wikipedia</a></li>
+                    <li><a href="http://www.visitbritain.com/">Official tourist guide to Britain</a></li>
+                    <li><a href="http://www.statistics.gov.uk/StatBase/Product.asp?vlnk=5703">Official 
+                        Yearbook of the United Kingdom</a></li>
+                </ul>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>India</td>
+            <td>1,147,995,904</td>
+            <td>3,287,240 km2</td>
+            <td>Hindi, English</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="125px-Flag_of_India.svg.png" alt="Flag of India" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/India">India on Wikipedia</a></li>
+                    <li><a href="http://india.gov.in/">Government of India</a></li>
+                    <li><a href="http://wikitravel.org/en/India">India travel guide</a></li>
+                 </ul>   
+            
+            </td>
+        </tr>
+        <tr>
+            <td>Canada</td>
+            <td>33,718,000</td>
+            <td>9,984,670 km2</td>
+            <td>English, French</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="125px-Flag_of_Canada.svg.png" alt="Flag of Canada" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/Canada">Canada on Wikipedia</a></li>
+                    <li><a href="http://atlas.gc.ca/site/index.html" >Official 
+                        Government of Canada online Atlas of Canada</a></li>
+                    <li><a href="http://wikitravel.org/en/Canada">Canada travel guide</a></li>
+                 </ul>   
+            </td>
+        </tr>
+        <tr>
+            <td>Germany</td>
+            <td>82,060,000</td>
+            <td>357,021 km2</td>
+            <td>German</td>
+            <td><div class="arrow"></div></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <img src="125px-Flag_of_Germany.svg.png" alt="Flag of Germany" />
+                <h4>Additional information</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/Germany">Germany on Wikipedia</a></li>
+                    <li><a href="http://www.deutschland.de/home.php?lang=2">Deutschland.de Official Germany portal</a></li>
+                    <li><a href="http://www.cometogermany.com/">Germany Travel Info</a></li>
+                 </ul>   
+            </td>
+        </tr>
+	</tbody>
+    </table>
+    <em>* Information taken from Wikipedia</em>
+	]]>
+     </script>
+  </div>
+  <div id="tabs-3">
+    <pre class="brush: css; toolbar: false;">
+        #demotable-jexpand { border-collapse:collapse; width: 505px;}
+        #demotable-jexpand h4 { margin:0px; padding:0px;}
+        #demotable-jexpand img { float:right;}
+        #demotable-jexpand ul { margin:10px 0 10px 40px; padding:0px;}
+        #demotable-jexpand th { background:#7CB8E2 url(header_bkg.png) repeat-x scroll center left; color:#fff; padding:3px 5px; text-align:left;}
+        #demotable-jexpand td { background:#C7DDEE none repeat-x scroll center left; color:#000; padding:3px 5px; }
+        #demotable-jexpand tr.odd td { background:#fff url(row_bkg.png) repeat-x scroll center left; cursor:pointer; }
+        #demotable-jexpand div.arrow { background:transparent url(arrows.png) no-repeat scroll 0px -16px; width:16px; height:16px; display:block;}
+        #demotable-jexpand div.up { background-position:0px 0px;}
+        #demotable-jexpand input { width:80px !important; }
+    </pre>
+  </div>
+
+</div>

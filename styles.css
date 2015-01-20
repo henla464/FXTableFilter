@@ -1,7 +1,8 @@
 
 body {
+	
+}
 
-	}
 * {	
 	font-family:arial;
 	line-height:1.5em;
@@ -120,3 +121,5 @@ hr {
 	margin-left:20px;
 	}
 .hidden { display: none; }
+
+

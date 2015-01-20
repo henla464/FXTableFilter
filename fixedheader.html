@@ -1,0 +1,145 @@
+
+<h2>fixedHeaderTable</h2>
+<hr class="titleseparator"/>
+<div class="example">
+	<table id='demotable-fixedheader' class="demotable">
+	<thead>
+		<tr><th>Model</td>
+		<th>From year</th>
+	        <th>To year</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>Saab 92</td><td>1949</td><td>1956</td></tr>
+		<tr><td>Saab 93</td><td>1955</td><td>1960</td></tr>
+		<tr><td>Saab GT750</td><td>1958</td><td>1960</td></tr>
+		<tr><td>Saab 94 Sonett I</td><td>1956</td><td>1956</td></tr>
+		<tr><td>Saab 95 estate</td><td>1959</td><td>1978</td></tr>
+		<tr><td>Saab 95 3 cylinder two-stroke</td><td>1960</td><td>1967</td></tr>
+		<tr><td>Saab 95 V4</td><td>1967</td><td>1980</td></tr>
+		<tr><td>Saab 96</td><td>1960</td><td>1980</td></tr>
+		<tr><td>Saab 96 3 cylinder two-stroke</td><td>1960</td><td>1968</td></tr>
+		<tr><td>Saab Sport 3 cylinder two-stroke</td><td>1962</td><td>1966</td></tr>
+		<tr><td>Saab Monte Carlo 850 3 cylinder two-stroke</td><td>1966</td><td>1967</td></tr>
+		<tr><td>Saab 96 V4</td><td>1967</td><td>1980</td></tr>
+		<tr><td>Saab Monte Carlo V4 V4</td><td>1967</td><td>1968</td></tr>
+		<tr><td>Sonett II</td><td>1966</td><td>1970</td></tr>
+		<tr><td>Sonett III</td><td>1970</td><td>1974</td></tr>
+		<tr><td>Saab Formula Junior single seat racing car</td><td>1960</td><td>1960</td></tr>
+		<tr><td>SAABO caravan/camper/travel trailer</td><td>1964</td><td>1968</td></tr>
+		<tr><td>Saab 99</td><td>1968</td><td>1984</td></tr>
+		<tr><td>Saab 900 "Classic"</td><td>1979</td><td>1994</td></tr>
+		<tr><td>Saab 90</td><td>1984</td><td>1987</td></tr>
+		<tr><td>Saab 600</td><td>1985</td><td>1988</td></tr>
+		<tr><td>Saab 9000</td><td>1985</td><td>1998</td></tr>
+		<tr><td>Saab 900 "New Generation"</td><td>1994</td><td>1998</td></tr>
+		<tr><td>Saab 9-3 first generation</td><td>1998</td><td>2002</td></tr>
+		<tr><td>Saab 9-2X</td><td>2005</td><td>2006</td></tr>
+		<tr><td>Saab 9-7X</td><td>2005</td><td>2009</td></tr>
+		<tr><td>Saab 9-5 first generation</td><td>1997</td><td>2009</td></tr>
+		<tr><td>Saab 9-3 SportSedan</td><td>2002</td><td>2011</td></tr>
+		<tr><td>Saab 9-3 Convertible</td><td>2004</td><td>2011</td></tr>
+		<tr><td>Saab 9-3 SportCombi</td><td>2006</td><td>2011</td></tr>
+		<tr><td>Saab 9-3X</td><td>2009</td><td>2011</td></tr>
+		<tr><td>Saab 9-5</td><td>2010</td><td>2011</td></tr>
+		<tr><td>Saab 9-4X</td><td>2011</td><td>2011</td></tr>
+	</tbody>
+	</table>
+</div>
+<div class="exampledescription">
+	<h3>Description</h3>
+	<p><a href="http://fixedheadertable.com">.FixedHeaderTable</a> is a JQuery plugin for adding a fixed header to any HTML table. It can easily be used with FXTableFilter. The only thing we need to adjust is the height of the wrapper div that the .FixedHeaderTable creates so that it can accomodate the filter row. </p>
+	<p>The .FixedHeaderTable files used in this example: <br/><a href="fixedheader/jquery.fixedheadertable.js">JQuery plugin javascript file</a><br/><a href="fixedheader/jquery.fixedheadertable.css">CSS file</a></p>
+</div>
+
+<div class="clearfix"></div>
+<h3>Code</h3>
+
+<div id="codetabs">
+  <ul>
+    <li><a href="#tabs-1">JavaScript</a></li>
+    <li><a href="#tabs-2">HTML</a></li>
+    <li><a href="#tabs-3">CSS</a></li>
+  </ul>
+  <div id="tabs-1">
+	<pre class="brush: js; toolbar: false;">
+           $(document).ready(function () {
+             var tableHeightWithoutFilters = 400;
+             $("#demotable-fixedheader").fixedHeaderTable({ footer: true, cloneHeadToFoot: true, fixedColumn: false, height: tableHeightWithoutFilters });
+
+             var tooltip = 'Your tooltip here!';
+             // Initialise Plugin
+             var optionsfixedheader = {
+               columnFilters: [ 	
+                 { columnName: 'Model', inputType: 'text', toolTipMessage: tooltip},
+                 { columnName: 'YearFrom', inputType: 'text', toolTipMessage: tooltip},
+                 { columnName: 'YearTo', inputType: 'text', toolTipMessage: tooltip}
+               ]
+             };
+
+             $('.fht-table-wrapper').css({ height: tableHeightWithoutFilters + 30 });
+             $('#demotable-fixedheader').tableFilter(optionsfixedheader);
+           });
+        </pre>
+  </div>
+  <div id="tabs-2">
+     <script type="syntaxhighlighter" class="brush: xml; toolbar: false;"><![CDATA[
+	<table id='demotable-fixedheader' class="demotable">
+	<thead>
+		<tr><th>Model</td>
+		<th>From year</th>
+	        <th>To year</th></tr>
+	</thead>
+	<tbody>
+		<tr><td>Saab 92</td><td>1949</td><td>1956</td></tr>
+		<tr><td>Saab 93</td><td>1955</td><td>1960</td></tr>
+		<tr><td>Saab GT750</td><td>1958</td><td>1960</td></tr>
+		<tr><td>Saab 94 Sonett I</td><td>1956</td><td>1956</td></tr>
+		<tr><td>Saab 95 estate</td><td>1959</td><td>1978</td></tr>
+		<tr><td>Saab 95 3 cylinder two-stroke</td><td>1960</td><td>1967</td></tr>
+		<tr><td>Saab 95 V4</td><td>1967</td><td>1980</td></tr>
+		<tr><td>Saab 96</td><td>1960</td><td>1980</td></tr>
+		<tr><td>Saab 96 3 cylinder two-stroke</td><td>1960</td><td>1968</td></tr>
+		<tr><td>Saab Sport 3 cylinder two-stroke</td><td>1962</td><td>1966</td></tr>
+		<tr><td>Saab Monte Carlo 850 3 cylinder two-stroke</td><td>1966</td><td>1967</td></tr>
+		<tr><td>Saab 96 V4</td><td>1967</td><td>1980</td></tr>
+		<tr><td>Saab Monte Carlo V4 V4</td><td>1967</td><td>1968</td></tr>
+		<tr><td>Sonett II</td><td>1966</td><td>1970</td></tr>
+		<tr><td>Sonett III</td><td>1970</td><td>1974</td></tr>
+		<tr><td>Saab Formula Junior single seat racing car</td><td>1960</td><td>1960</td></tr>
+		<tr><td>SAABO caravan/camper/travel trailer</td><td>1964</td><td>1968</td></tr>
+		<tr><td>Saab 99</td><td>1968</td><td>1984</td></tr>
+		<tr><td>Saab 900 "Classic"</td><td>1979</td><td>1994</td></tr>
+		<tr><td>Saab 90</td><td>1984</td><td>1987</td></tr>
+		<tr><td>Saab 600</td><td>1985</td><td>1988</td></tr>
+		<tr><td>Saab 9000</td><td>1985</td><td>1998</td></tr>
+		<tr><td>Saab 900 "New Generation"</td><td>1994</td><td>1998</td></tr>
+		<tr><td>Saab 9-3 first generation</td><td>1998</td><td>2002</td></tr>
+		<tr><td>Saab 9-2X</td><td>2005</td><td>2006</td></tr>
+		<tr><td>Saab 9-7X</td><td>2005</td><td>2009</td></tr>
+		<tr><td>Saab 9-5 first generation</td><td>1997</td><td>2009</td></tr>
+		<tr><td>Saab 9-3 SportSedan</td><td>2002</td><td>2011</td></tr>
+		<tr><td>Saab 9-3 Convertible</td><td>2004</td><td>2011</td></tr>
+		<tr><td>Saab 9-3 SportCombi</td><td>2006</td><td>2011</td></tr>
+		<tr><td>Saab 9-3X</td><td>2009</td><td>2011</td></tr>
+		<tr><td>Saab 9-5</td><td>2010</td><td>2011</td></tr>
+		<tr><td>Saab 9-4X</td><td>2011</td><td>2011</td></tr>
+	</tbody>
+	</table>
+	]]>
+     </script>
+  </div>
+  <div id="tabs-3">
+    <pre class="brush: css; toolbar: false;">
+       .demotable th {
+          background-color: #333;
+          color: #fff;
+          font-size: 0.85em;
+       }
+       .demotable {
+          border-width: 1px;
+          border-style: solid;
+       }
+    </pre>
+  </div>
+
+</div>

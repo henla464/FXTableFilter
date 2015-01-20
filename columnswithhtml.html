@@ -1,0 +1,81 @@
+
+<h2>Columns containing HTML</h2>
+<hr class="titleseparator"/>
+<div class="example">
+<table id='demotable-withhtml' class="demotable">
+	<thead>
+		<tr><th>Text Column 1</th><th>Number Column</th><th>Yes/No</th></tr></thead>
+	</thead>
+	<tbody>
+		<tr><td><a href="something.htm"><b>Value400</b></a></td><td><a href="somethingelse.htm">347</a></td><td>yes</td></tr>
+		<tr><td><a href="something.htm"><b>Value368</b></a></td><td><a href="somethingelse.htm">242</a></td><td>no</td></tr>
+		<tr><td><a href="something.htm"><b>Value94</b></a></td><td><a href="somethingelse.htm">97</a></td><td>no</td></tr>
+		<tr><td><a href="something.htm"><b>Value491</b></a></td><td><a href="somethingelse.htm">114</a></td><td>yes</td></tr>
+		<tr><td><a href="something.htm"><b>Value66</b></a></td><td><a href="somethingelse.htm">341</a></td><td>no</td></tr>
+		<tr><td><a href="something.htm"><b>Value413</b></a></td><td><a href="somethingelse.htm">297</a></td><td>no</td></tr>
+	</tbody>
+</table>
+</div>
+<div class="exampledescription">
+	<h3>Description</h3>
+	<p>This example demonstrates how you can filter correctly on columns that contains HTML tags. "Text Column 1" and "Number Column" both contains HTML links in the table cells. For the filtering to only filter using the text of these columns (and not the HTML tags) you must set the "onlyText" option to true for these columns. This option defaults to false due to performance reasons. If this option had not been set on "Number Column" you could have typed for example "href" in its filter and it would have matched all rows.</P>
+</div>
+
+<div class="clearfix"></div>
+<h3>Code</h3>
+
+<div id="codetabs">
+  <ul>
+    <li><a href="#tabs-1">JavaScript</a></li>
+    <li><a href="#tabs-2">HTML</a></li>
+    <li><a href="#tabs-3">CSS</a></li>
+  </ul>
+  <div id="tabs-1">
+	<pre class="brush: js; toolbar: false;">
+           $(document).ready(function () {
+             var tooltip = 'Your tooltip here!';
+             var optionscolumnswithhtml = {
+            	columnFilters: [ 	
+                  { columnName: 'col1', inputType: 'ddl', toolTipMessage: tooltip, onlyText: true},
+                  { columnName: 'col2', inputType: 'text', toolTipMessage: tooltip, onlyText: true},
+                  { columnName: 'col3', inputType: 'text'}
+                ]
+             };
+
+             $('#demotable-withhtml').tableFilter(optionscolumnswithhtml);
+           });
+        </pre>
+  </div>
+  <div id="tabs-2">
+     <script type="syntaxhighlighter" class="brush: xml; toolbar: false;"><![CDATA[
+	<table id='demotable-withhtml' class="demotable">
+	<thead>
+		<tr><th>Text Column 1</th><th>Number Column</th><th>Yes/No</th></tr></thead>
+	</thead>
+	<tbody>
+		<tr><td><a href="something.htm"><b>Value400</b></a></td><td><a href="somethingelse.htm">347</a></td><td>yes</td></tr>
+		<tr><td><a href="something.htm"><b>Value368</b></a></td><td><a href="somethingelse.htm">242</a></td><td>no</td></tr>
+		<tr><td><a href="something.htm"><b>Value94</b></a></td><td><a href="somethingelse.htm">97</a></td><td>no</td></tr>
+		<tr><td><a href="something.htm"><b>Value491</b></a></td><td><a href="somethingelse.htm">114</a></td><td>yes</td></tr>
+		<tr><td><a href="something.htm"><b>Value66</b></a></td><td><a href="somethingelse.htm">341</a></td><td>no</td></tr>
+		<tr><td><a href="something.htm"><b>Value413</b></a></td><td><a href="somethingelse.htm">297</a></td><td>no</td></tr>
+	</tbody>
+	</table>
+	]]>
+     </script>
+  </div>
+  <div id="tabs-3">
+    <pre class="brush: css; toolbar: false;">
+       .demotable th {
+          background-color: #333;
+          color: #fff;
+          font-size: 0.85em;
+       }
+       .demotable {
+          border-width: 1px;
+          border-style: solid;
+       }
+    </pre>
+  </div>
+
+</div>
